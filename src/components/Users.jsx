@@ -1,12 +1,25 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteUser } from '../slices/slice';
 
-const Users = () => {
-  const users = useSelector((store) => store.usersInfo.users);
+export const Users = () => {
+  const users = useSelector((state) => state.usersInfo);
+  const dispatch = useDispatch();
 
-  console.log(users);
+  const handleDelete = (id) => {
+    dispatch(deleteUser(id));
+  };
 
-  return <div>Users</div>;
+  return (
+    <div>
+      {users.map((usr, index) => (
+        <ul key={index}>
+          <li>{usr}</li>
+          <button onClick={() => handleDelete(index)}>Delete</button>
+        </ul>
+      ))}
+    </div>
+  );
 };
 
 export default Users;
